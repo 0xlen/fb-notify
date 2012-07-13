@@ -1,8 +1,9 @@
 ##Overview
 
-- facebook desktop alert on ubuntu.
-
-- simple feature make it easier to receive notification.
+- works on ubuntu.
+- might python 2.6 required.
+- simply ,no complex feature.
+- MIT License
 
 ##ScreenShot
 [![Screenshot](https://github.com/0xlen/fb-notify/raw/master/doc/Screenshot.png)](https://github.com/0xlen/fb-notify/raw/master/doc/Screenshot.png)
