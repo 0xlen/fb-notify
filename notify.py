@@ -47,6 +47,9 @@ tmp = os.path.dirname(os.path.abspath(__file__)) + '/tmp/'
 
 
 if __name__ == '__main__':
+    if not pynotify.init ("icon-summary-body"):
+        sys.exit (1)
+
     if os.path.exists( tmp ):
         pass
     else:
@@ -58,10 +61,6 @@ if __name__ == '__main__':
             sys.ext(1)
         print 'success'
 
-    if not pynotify.init ("icon-summary-body"):
-        sys.exit (1)
-
-
 #pynotify.Notification method
 def notify(title,msg,photo):
 	n = pynotify.Notification (title,msg,photo) #"notification-message-im"
@@ -69,28 +68,33 @@ def notify(title,msg,photo):
 
 #notify loop
 while(1):
-    time.sleep(random.randint(30,120))
+    try:
+        time.sleep(random.randint(30,120))
     
-    #facebook ID
-    ID = 'len.tw'
+        #facebook ID
+        ID = 'len.tw'
     
-    #Graph API access_token
+        #Graph API access_token
 
-    #print fbconsole.ACCESS_TOKEN
-    token = fbconsole.ACCESS_TOKEN
+        #print fbconsole.ACCESS_TOKEN
+        token = fbconsole.ACCESS_TOKEN
 
-    req = urllib2.Request('https://graph.facebook.com/'+ ID + '/notifications?access_token='+token)
-    req.add_header('User-agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6')
-    r = urllib2.urlopen(req)
+        req = urllib2.Request('https://graph.facebook.com/'+ ID + '/notifications?access_token='+token)
+        req.add_header('User-agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6')
+        r = urllib2.urlopen(req)
 
-    jr = json.load( r ) 
+        jr = json.load( r ) 
 
-    for data in jr["data"]:
-        name = data["from"]["name"]  #notify from who
-        msg  = data["title"]         #notify summary
-        photoID = data["from"]["id"] #Got notify from who's ID
-        photo = 'https://graph.facebook.com/' + photoID + '/picture'
-        tmp = os.path.dirname(os.path.abspath(__file__)) + '/tmp/'
-        tmp += photoID
-        urllib.urlretrieve(photo,tmp)
-        notify(name,msg,tmp)
+        for data in jr["data"]:
+            name = data["from"]["name"]  #notify from who
+            msg  = data["title"]         #notify summary
+            photoID = data["from"]["id"] #Got notify from who's ID
+            photo = 'https://graph.facebook.com/' + photoID + '/picture'
+            tmp = os.path.dirname(os.path.abspath(__file__)) + '/tmp/'
+            tmp += photoID
+            urllib.urlretrieve(photo,tmp)
+            notify(name,msg,tmp)
+    except KeyboardInterrupt:
+        fbconsole.logout()
+        print '\nLog out'
+        exit(0)
