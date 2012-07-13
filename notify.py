@@ -90,6 +90,7 @@ while(1):
         msg  = data["title"]         #notify summary
         photoID = data["from"]["id"] #Got notify from who's ID
         photo = 'https://graph.facebook.com/' + photoID + '/picture'
+        tmp = os.path.dirname(os.path.abspath(__file__)) + '/tmp/'
         tmp += photoID
         urllib.urlretrieve(photo,tmp)
         notify(name,msg,tmp)
