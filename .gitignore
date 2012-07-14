@@ -1,4 +1,4 @@
 tmp/
-.swp
+*.swp
 *.pyc
 .fb_access_token
