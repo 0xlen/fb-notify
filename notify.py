@@ -87,9 +87,6 @@ while(1):
         for data in jr["data"]:
             if data == '' :
                 continue
-            else:
-                print '!null'
-
             name = data["from"]["name"]  # notify from who
             msg  = data["title"]         # notify summary
             photoID = data["from"]["id"] # Got notify from who's ID
